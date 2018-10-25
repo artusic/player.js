@@ -463,8 +463,8 @@ class Player {
                 playerMap.delete(this._originalElement);
                 this._originalElement.removeAttribute('data-vimeo-initialized');
             }
-            if (this.element && this.element.nodeName === 'IFRAME') {
-                this.element.remove();
+            if (this.element && this.element.nodeName === 'IFRAME' && this.element.parentNode) {
+                this.element.parentNode.removeChild(this.element);
             }
             resolve();
         });
@@ -876,8 +876,7 @@ class Player {
 }
 
 // Setup embed only if this is not a node environment
-// and if there is no existing Vimeo Player object
-if (!isNode && (window.Vimeo && !window.Vimeo.Player)) {
+if (!isNode) {
     initializeEmbeds();
     resizeEmbeds();
 }
